@@ -261,34 +261,29 @@ Reservations expire automatically after 10 minutes.
 
 ## Expiry Strategy
 
-Implemented using:
+Reservation Expiry
 
-* Vercel Cron Jobs
-* Scheduled cleanup endpoint
+Reservations expire automatically after 10 minutes.
 
-Cron endpoint:
+Expiry Strategy
 
-```txt
-/api/cron/release-expired-reservations
-```
+This project uses a lazy cleanup strategy instead of scheduled cron jobs.
 
-The cron job:
+Whenever inventory or reservations are accessed, the backend checks for expired pending reservations and automatically releases their reserved stock inside database transactions.
 
-1. Finds expired pending reservations
-2. Locks reservation rows
-3. Releases reserved inventory
-4. Marks reservations as EXPIRED
+This approach was chosen because:
 
-Cron schedule:
+Vercel Hobby plans limit cron execution frequency
+lazy cleanup keeps the system consistent without dedicated background infrastructure
+it simplifies deployment while preserving correctness
 
-```json
-{
-  "path": "/api/cron/release-expired-reservations",
-  "schedule": "*/1 * * * *"
-}
-```
+Expired reservations are handled by:
 
-This runs every minute in production.
+detecting expired PENDING reservations
+releasing reserved inventory
+marking reservations as EXPIRED
+
+All cleanup operations run inside PostgreSQL transactions with row-level locking to maintain concurrency safety.
 
 ---
 
