@@ -28,7 +28,7 @@ CREATE TABLE "Inventory" (
     "id" TEXT NOT NULL,
     "productId" TEXT NOT NULL,
     "warehouseId" TEXT NOT NULL,
-    "totalQunatity" INTEGER NOT NULL,
+    "totalQuantity" INTEGER NOT NULL,
     "reservedQuantity" INTEGER NOT NULL DEFAULT 0,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

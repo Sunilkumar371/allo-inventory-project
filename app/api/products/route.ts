@@ -2,53 +2,53 @@ import { NextRequest,NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import {ProductResponse} from "@/types/product.types"
 import { createProductSchema } from "@/schemas/product.schema";
-// export async function GET() {
-//     try {
-//         const products = await prisma.product.findMany({
-//             include:{
-//                 inventories:{
-//                     include:{
-//                         warehouse:true
-//                     }
-//                 }
-//             }
-//         });
+export async function GET() {
+    try {
+        const products = await prisma.product.findMany({
+            include:{
+                inventories:{
+                    include:{
+                        warehouse:true
+                    }
+                }
+            }
+        });
 
-//         const formattedProducts = products.map((product) => ({
-//             id : product.id,
-//             name:product.name,
-//             sku:product.sku,
+        const formattedProducts = products.map((product) => ({
+            id : product.id,
+            name:product.name,
+            sku:product.sku,
             
-//             inventories: product.inventories.map((inventory) => ({
-//                 inventoryId : inventory.id,
+            inventories: product.inventories.map((inventory) => ({
+                inventoryId : inventory.id,
 
-//                 warehouse:{
-//                     id: inventory.warehouse.id,
-//                     name:inventory.warehouse.name,
-//                     location:inventory.warehouse.location
-//                 },
+                warehouse:{
+                    id: inventory.warehouse.id,
+                    name:inventory.warehouse.name,
+                    location:inventory.warehouse.location
+                },
 
-//                 totalQuantity : inventory.totalQuantity,
-//                 reservedQuantity : inventory.reservedQuantity,
+                totalQuantity : inventory.totalQuantity,
+                reservedQuantity : inventory.reservedQuantity,
 
-//                 avilableQuantity: inventory.totalQuantity - inventory.reservedQuantity
-//             })),
-//         }));
+                avilableQuantity: inventory.totalQuantity - inventory.reservedQuantity
+            })),
+        }));
 
-//         return NextResponse.json(formattedProducts)
-//     } catch (error) {
-//         console.error("GET_PRODUCTS_ERROR",error)
+        return NextResponse.json(formattedProducts)
+    } catch (error) {
+        console.error("GET_PRODUCTS_ERROR",error)
 
-//         return NextResponse.json(
-//             {
-//                 error:"Failed to fetch products"
-//             },
-//             {
-//                 status:500
-//             }
-//         )
-//     }
-// }
+        return NextResponse.json(
+            {
+                error:"Failed to fetch products"
+            },
+            {
+                status:500
+            }
+        )
+    }
+}
 
 export async function POST(req: NextRequest) {
   try {
