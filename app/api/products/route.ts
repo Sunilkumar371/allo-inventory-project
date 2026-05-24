@@ -31,7 +31,7 @@ export async function GET() {
                 totalQuantity : inventory.totalQuantity,
                 reservedQuantity : inventory.reservedQuantity,
 
-                avilableQuantity: inventory.totalQuantity - inventory.reservedQuantity
+                availableQuantity: inventory.totalQuantity - inventory.reservedQuantity
             })),
         }));
 
