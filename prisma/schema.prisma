@@ -58,7 +58,7 @@ enum ReservationStatus {
 model Reservation{
   id String @id @default(uuid())
   inventoryId String 
-  qunatity Int
+  quantity Int
   status ReservationStatus
   expiresAt DateTime
   inventory Inventory @relation(fields: [inventoryId], references: [id])
